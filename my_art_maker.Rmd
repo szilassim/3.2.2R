@@ -1,0 +1,52 @@
+---
+title: "My Random Art Maker Function"
+author: "Máté Szilassi"
+date: "2024-01-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+This function, my_art, generates a random art picture using the provided seed. It uses the ggplot2 package to create a scatter plot with points, lines, and curves of random colors, sizes and directions.
+
+```{r}
+# This function prints out a random art picture using the input as a seed
+my_art <- function(seed=1){
+  # This makes a dataframe of random numbers and colors
+  art_data <- data.frame(
+    color = sample(
+      c("green","red","purple","blue","black","white"),
+      100,T),
+    x = runif(100,0,100),
+    y = runif(100,0,100)
+  )
+  # This uses those random numbers and colors to map random dots and lines
+  art_visual <- ggplot(art_data, aes(x = x, y = y, color = color)) +
+    geom_point(size = runif(100,1,5)) +
+    geom_line(linewidth=runif(100,0,1)) +
+    geom_curve(aes(
+      x=runif(100,1,5),
+      y = y, 
+      xend=runif(100,0,100),
+      yend=runif(100,0,100))
+    ) +
+    theme_void() +
+    theme(legend.position="none")
+  
+  print(art_visual)
+}
+
+# Set a seed for reproducibility
+set.seed(123)
+
+# Generate random art with seed 123
+
+```
+
+```{r pressure, echo=FALSE}
+my_art(123)
+
+```
